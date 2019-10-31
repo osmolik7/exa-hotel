@@ -31,7 +31,7 @@ require_once('../DATA/conexion.php');
     function saveRoom($conn, $hab_numero, $hab_cantidad, $hab_descripcion, $hab_estado, $hab_detalle, $tip_cod, $empresa, $hab_precio)
     {
       
-        $sql= "INSERT INTO habitacion (Hab_num, Hab_Num_Prs, Hab_Des, Hab_Est, Hab_Est_Det, Tip_Hab_Cod, Emp_Cod, Hab_Precio) VALUES('$hab_numero', $hab_cantidad ,'$hab_descripcion','$hab_estado','$hab_detalle', $tip_cod, $empresa, $hab_precio)";
+        $sql= "INSERT INTO habitacion (Hab_Numero, Hab_Cantidad, Hab_Descripcion, Hab_Estado, Hab_Detalle, Tip_Cod, Emp_Cod, Hab_Precio) VALUES('$hab_numero', $hab_cantidad ,'$hab_descripcion','$hab_estado','$hab_detalle', $tip_cod, $empresa, $hab_precio)";
 
         if (!$conn)
         {
