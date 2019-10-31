@@ -3,21 +3,19 @@ require_once('../../administrador/LOGICA/seguridad.php');
 require_once($APP_REAL_PATH."/Librerias/ChromePhp.php");
 require_once('../DATA/conexion.php');
 	
-	//CARGAR LOS DATOS CON EL CODIGO 
 	$codigoHab = $_POST['HabCod'];
 	$sqlDatosModificar = 'SELECT * FROM habitacion WHERE Hab_Cod = ' . $codigoHab;
 
 	$datos = mysqli_query($conexionHotel, $sqlDatosModificar);
 	while ($row = mysqli_fetch_array($datos))
 	{
-	    $numHabitacion = $row['Hab_Num'];
-	    $numPersonas = $row['Hab_Num_Prs'];
-	    $color = $row['Hab_Est_Col'];
-	    $descripcion = $row['Hab_Des'];
+	    $numHabitacion = $row['Hab_Numero'];
+	    $numPersonas = $row['Hab_Cantidad'];
+	    $descripcion = $row['Hab_Descripcion'];
 	    $precio = $row['Hab_Precio'];
-	    $estado = $row['Hab_Est'];
-      $detalle = $row['Hab_Est_Det'];
-	    $tipo = $row['Tip_Hab_Cod'];
+	    $estado = $row['Hab_Estado'];
+      $detalle = $row['Hab_Detalle'];
+	    $tipo = $row['Tip_Cod'];
 	}
 
     function test_input($data)
@@ -48,7 +46,7 @@ require_once('../DATA/conexion.php');
     function updateRoom($conn, $hab_numero, $hab_cantidad, $hab_descripcion, $hab_estado, $hab_detalle, $tip_cod, $hab_precio, $codigoHab)
     {
       
-        $sql= "UPDATE habitacion SET Hab_num = '$hab_numero', Hab_Num_Prs = $hab_cantidad, Hab_Des = '$hab_descripcion', Hab_Est = '$hab_estado', Hab_Est_Det = '$hab_detalle', Tip_Hab_Cod = $tip_cod, Hab_Precio = $hab_precio WHERE Hab_Cod = " . $codigoHab;
+        $sql= "UPDATE habitacion SET Hab_Numero = '$hab_numero', Hab_Cantidad = $hab_cantidad, Hab_Descripcion = '$hab_descripcion', Hab_Estado = '$hab_estado', Hab_Detalle = '$hab_detalle', Tip_Cod = $tip_cod, Hab_Precio = $hab_precio WHERE Hab_Cod = " . $codigoHab;
 
         ChromePhp::log("Modificar: " . $sql);
 
@@ -61,7 +59,7 @@ require_once('../DATA/conexion.php');
             ChromePhp::log("Conexion exitosa");
             if (mysqli_query($conn, $sql)){
                 ChromePhp::log("Se modifico correctamente");
-                header("Location:tes_con_habitacion_1.0.php");
+                header("Location:hot_con_habitacion.php");
             } 
             else {
                 ChromePhp::log("No se modifico correctamente");

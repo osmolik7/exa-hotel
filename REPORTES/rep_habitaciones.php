@@ -5,13 +5,13 @@
 	$empresa = $_SESSION['Ses_Emp_Cod'];
 
 	$sqlSelectHabitaciones = "select habitacion.*, 
-		CASE habitacion.Hab_Est
+		CASE habitacion.Hab_Estado
 		   WHEN 'I' THEN 'Inhabilitado'
 		   WHEN 'M' THEN 'Mantenimiento'
 		   WHEN 'O' THEN 'Ocupada'
 		   ELSE 'Habilitada'
 		END AS 'Hab_Estado',
-		habitacion_tipo.Tip_Descripcion from habitacion, habitacion_tipo where habitacion.Emp_Cod = $empresa and habitacion_tipo.Id = habitacion.Tip_Hab_Cod";
+		habitacion_tipo.Tip_Descripcion from habitacion, habitacion_tipo where habitacion.Emp_Cod = $empresa and habitacion_tipo.Tip_Cod = habitacion.Tip_Cod";
 
 	$habitaciones = mysqli_query($conexionHotel, $sqlSelectHabitaciones);
 	
@@ -71,10 +71,10 @@
 	while ($row = mysqli_fetch_array($habitaciones))
 	{
 	    $habCod = $row['Hab_Cod'];
-	    $habNum = $row['Hab_Num'];
-	    $habCant = $row['Hab_Num_Prs'];
+	    $habNum = $row['Hab_Numero'];
+	    $habCant = $row['Hab_Cantidad'];
 	    $habPre = number_format((float)$row['Hab_Precio'], 2, '.', '');
-	    $habDes = $row['Hab_Des'];
+	    $habDes = $row['Hab_Descripcion'];
 	    $habEst = $row['Hab_Estado'];
 	    $habTip = $row['Tip_Descripcion'];
 
