@@ -2,60 +2,10 @@
 require_once('../../administrador/LOGICA/seguridad.php');
 require_once($APP_REAL_PATH."/Librerias/ChromePhp.php");
 require_once('../DATA/conexion.php');
-
-    function test_input($data)
-    {
-      $data = trim($data);
-      $data = stripslashes($data);
-      $data = htmlspecialchars($data);
-      return $data;
-    }
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST")
-    {
-        if(isset($_POST['Hab_Numero'])) {
-            $hab_numero = test_input($_POST['Hab_Numero']);
-            $hab_cantidad = test_input($_POST['Hab_Cantidad']);
-            $hab_descripcion = $_POST['Hab_Descripcion'];
-            $hab_estado = test_input($_POST['Hab_Estado']);
-            $hab_precio = test_input($_POST['Hab_Precio']);
-            $hab_detalle = test_input($_POST['hab_detalle']);
-            $tip_cod = test_input($_POST['Tip_Cod']);
-            $empresa = $_SESSION['Ses_Emp_Cod'];
-
-            saveRoom($conexionHotel, $hab_numero, $hab_cantidad, $hab_descripcion, $hab_estado, $hab_detalle, $tip_cod, $empresa, $hab_precio);
-        }
-
-    }
-
-    function saveRoom($conn, $hab_numero, $hab_cantidad, $hab_descripcion, $hab_estado, $hab_detalle, $tip_cod, $empresa, $hab_precio)
-    {
-      
-        $sql= "INSERT INTO habitacion (Hab_Numero, Hab_Cantidad, Hab_Descripcion, Hab_Estado, Hab_Detalle, Tip_Cod, Emp_Cod, Hab_Precio) VALUES('$hab_numero', $hab_cantidad ,'$hab_descripcion','$hab_estado','$hab_detalle', $tip_cod, $empresa, $hab_precio)";
-
-        if (!$conn)
-        {
-            ChromePhp::log("Error en la conexion " . mysqli_connect_error());
-        }
-        else
-        {
-            ChromePhp::log("Conexion exitosa");
-            if (mysqli_query($conn, $sql)){
-                ChromePhp::log("Se inserto correctamente");
-            } 
-            else {
-                ChromePhp::log("No se inserto correctamente");
-            }
-            mysqli_close($conn);
-        } 
-    }
-
 ?>
-
 
 <!DOCTYPE html>
 <HTML>
-
     <HEAD>
         <TITLE><?Php echo $Ses_Sys_Nom; ?></TITLE>
         <?Php require_once("../../mascaras/model1/estilos/jqgrid5.php") ?>
@@ -125,9 +75,8 @@ require_once('../DATA/conexion.php');
             }
 
             .modal-body {padding: 2px 16px;}
-
-            </style>
-
+          </style>
+          
     </HEAD>
 
     <BODY>
@@ -138,9 +87,8 @@ require_once('../DATA/conexion.php');
                     <div class="col-sm-3"></div>
                     <div class="col-md-6 col-sm-8">
 
-                        <form class="form-horizontal normal" id="formHabitacion" name="formHabitacion" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <form class="form-horizontal normal" id="formHabitacion" name="formHabitacion"  onsubmit="return guardarHabitacion()">
 
-                            <input name="Prs_Cod" type="text" class="hidden" />
                             <fieldset class="exa-fieldset" >
                                 <legend class="Titulos2">Datos de la habitación</legend>
                                 <div class="form-group Titulos2">
@@ -227,9 +175,7 @@ require_once('../DATA/conexion.php');
 
 
                     
-                    <!-- The Modal -->
                     <div id="myModal" class="modal">
-                      <!-- Modal content -->
                       <div class="modal-content">
                         <div class="modal-header">
                           <span class="close">&times;</span>
@@ -274,7 +220,7 @@ require_once('../DATA/conexion.php');
 
 
         <script>            
-            //PARA VENTANA MODAL DE REGISTRO DE TIPO
+
             // Get the modal
             var modal = document.getElementById("myModal");
             // Get the button that opens the modal
@@ -296,6 +242,30 @@ require_once('../DATA/conexion.php');
               }
             }
             
+            //PARA GUARDAR LA HABITACION Y ACTUALICE EL COMBO
+            function guardarHabitacion(){
+                var num = document.getElementById('Hab_Numero').value;
+                var cant = document.getElementById('Hab_Cantidad').value;
+                var des = document.getElementById('Hab_Descripcion').value;
+                var est = document.getElementById('Hab_Estado').value;
+                var pre = document.getElementById('Hab_Precio').value;
+                var det = document.getElementById('hab_detalle').value;
+                var tipcod = document.getElementById('Tip_Cod').value;
+
+                var xhttp = new XMLHttpRequest();              
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) 
+                    {
+                      document.getElementById('Tip_Cod').innerHTML = this.responseText;
+                    }
+                  };
+
+                xhttp.open("POST","../LOGICA/log_alt_habitacion.php", true);
+                xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                xhttp.send("num="+num+"&cant="+cant+"&des="+des+"&est="+est+"&pre="+pre+"&det="+det+"&tipcod="+tipcod);
+            }
+
+
             //PARA GUARDAR EL TIPO Y ACTUALICE EL COMBO
             function guardarTipo(){
                 var descripcion = document.getElementById('Tip_Descripcion').value;
