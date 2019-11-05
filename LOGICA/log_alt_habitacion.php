@@ -26,26 +26,19 @@ require_once('../DATA/conexion.php');
 
         if (!$conn)
         {
-            echo "<script type='text/javascript'>
-					alert('Error en la conexion');
-				</script>";
+            echo "Problema en conexion a la base de datos!";
         }
         else
         {
             if (mysqli_query($conn, $sql)){
 
-            	echo "<script type='text/javascript'>
-						alert('Se ingreso correctamente la habitacion!');
-					  </script>";
+            	echo "Se guardo correctamente!";
             } 
             else {
 
-                echo "<script type='text/javascript'>
-						alert('No se ingreso la habitacion!');
-					  </script>";
+                echo "No se logro guardar!";
             }
             mysqli_close($conn);
         } 
     }
-    include('../LOGICA/log_con_habtipo.php');
 ?>

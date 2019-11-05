@@ -67,22 +67,22 @@
 		$pdf->Cell(40,40,"",1,0,'C',True);
 
 		$pdf->SetFont("Arial","B",9);
-		$pdf->SetY($y + 3);
-		$pdf->SetX($x + 15);
+		$pdf->SetY($y + 1);
+		$pdf->SetX($x + 12);
 	    $pdf->Cell(20,7,$habNum);
 
 	    $pdf->SetFont("Arial","",8);
 	    $pdf->SetY($y + 10);
-		$pdf->SetX($x + 15);
-		$pdf->Cell(20,7, '# ' . $habCant);
+		$pdf->SetX($x + 10);
+		$pdf->Cell(20,7, '#Prs: ' . $habCant);
 
 		$pdf->SetY($y + 17);
-		$pdf->SetX($x + 15);
-		$pdf->Cell(20,7,$habTip);
+		$pdf->SetX($x + 10);
+		$pdf->Cell(20,7,'#Tipo: ' . $habTip);
 
 		$pdf->SetY($y + 25);
-		$pdf->SetX($x + 15);
-		$pdf->Cell(20,7,'$ ' . $habPre);
+		$pdf->SetX($x + 10);
+		$pdf->Cell(20,7,'Precio: $' . $habPre);
 
 
 	    if($i%5 == 0){

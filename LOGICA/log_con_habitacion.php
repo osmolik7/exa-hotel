@@ -23,10 +23,9 @@ else{
 }
 
 
-if($estado == 'H'){
-	$sqlAdicionalEstado = " and Hab_Estado = 'H'";
-}
-elseif($estado == 'I'){
+$sqlAdicionalEstado = " and Hab_Estado = 'H'";
+
+if($estado == 'I'){
 	$sqlAdicionalEstado= " and Hab_Estado = 'I'";
 }
 elseif($estado == 'O'){
@@ -35,7 +34,7 @@ elseif($estado == 'O'){
 elseif($estado == 'M'){
 	$sqlAdicionalEstado= " and Hab_Estado = 'M'";
 }
-else{
+elseif($estado == 'T'){
 	$sqlAdicionalEstado= "";
 }
 
@@ -60,6 +59,7 @@ else{
 	END AS 'Hab_Estado',
 	habitacion_tipo.Tip_Descripcion from habitacion, habitacion_tipo where habitacion.Emp_Cod = $empresa and habitacion_tipo.Tip_Cod = habitacion.Tip_Cod" . $sqlAdicionalEstado;
 }
+
 
 echo "<thead class='thead-dark ui-th-column ui-th-ltr ui-state-default' >
 		<tr style='border-radius: 10px;'>
@@ -119,8 +119,6 @@ while ($row = mysqli_fetch_array($habitaciones))
     else{
     	$colorEstado = "label-danger";
     }
-
-    //#f3f7fc
 
 	echo "<tr>
 			<td role='gridcell' class='jqgrid-rownum ui-state-default' style='text-align:center;width: 30px;' title='$i' aria-describedby='tableResult_rn'>$i</td>

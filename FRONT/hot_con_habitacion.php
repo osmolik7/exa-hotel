@@ -28,7 +28,7 @@ require_once('../DATA/conexion.php');
             }
             table{
                 font-family:Lucida Grande,Lucida Sans,Arial,sans-serif; 
-                font-size: 11px; 
+                font-size: 9px; 
                 border-color: black;
             }
 
@@ -71,7 +71,7 @@ require_once('../DATA/conexion.php');
                                         <div class="col-xs-3 col-sm-3" style="margin-left: 0px;  padding-left: 0px;" >
                                             <select id="Hab_Estado" name="Hab_Estado" class="form-control input-xs" onchange="buscarHabitacion('')">
                                                 <option value = "T" >Todos</option>
-                                                <option value = "H" >Habilitado</option>
+                                                <option value = "H" selected="">Habilitado</option>
                                                 <option value = "I" >Inhabilitada</option>
                                                 <option value = "M" >Mantenimiento</option>
                                                 <option value = "O" >Ocupada</option>

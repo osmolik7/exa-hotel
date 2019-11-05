@@ -43,12 +43,12 @@ require_once('../DATA/conexion.php');
 
             /* Add Animation */
             @-webkit-keyframes animatetop {
-              from {top:-300px; opacity:0} 
+              from {top:-5px; opacity:0} 
               to {top:0; opacity:1}
             }
 
             @keyframes animatetop {
-              from {top:-300px; opacity:0}
+              from {top:-5px; opacity:0}
               to {top:0; opacity:1}
             }
 
@@ -161,7 +161,7 @@ require_once('../DATA/conexion.php');
                                             <?php include ('../LOGICA/log_con_habtipo.php'); ?>
                                         </select>
 
-                                        <button class="btn btn-success btn-xs" title="Agregar tipo" id="myBtn"><span class="glyphicon glyphicon-plus"></span></button>
+                                        <a class="btn btn-success btn-xs" title="Agregar tipo" id="myBtn"><span class="glyphicon glyphicon-plus"></span></a>
 
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@ require_once('../DATA/conexion.php');
                          <form class="form-horizontal normal" id="formHabitacionTipo" name="formHabitacionTipo" onsubmit="return guardarTipo()">
 
                             <div class="form-group">
-                                <label class="col-xs-3 control-label label-xs required">Descripción:</label>
+                                <label class="col-xs-3 control-label label-xs required">Nombre:</label>
                                 <div class="col-xs-9" >
                                     <div class="input-group input-group-xs">
                                         <input id="Tip_Descripcion" name="Tip_Descripcion" type="text" class="form-control input-xs" required="" />
@@ -210,7 +210,6 @@ require_once('../DATA/conexion.php');
                         </form>
                       </div>
                     </div>
-
 
 
                     </div>
@@ -242,6 +241,8 @@ require_once('../DATA/conexion.php');
               }
             }
             
+
+
             //PARA GUARDAR LA HABITACION Y ACTUALICE EL COMBO
             function guardarHabitacion(){
                 var num = document.getElementById('Hab_Numero').value;
@@ -256,7 +257,8 @@ require_once('../DATA/conexion.php');
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4) 
                     {
-                      document.getElementById('Tip_Cod').innerHTML = this.responseText;
+                      var mensaje = this.responseText;
+                      alert(mensaje);
                     }
                   };
 
