@@ -26,47 +26,18 @@
 	$pdf->SetFont("Arial","B",10);
 	$fecha = date('j-m-y');
 	$pdf->SetY(20);
-	$pdf->SetX(5);
+	$pdf->SetX(7);
 	$pdf->Cell(15,10,"Fecha:");
 	$pdf->SetFont("Arial","",9);
 
 	$pdf->SetY(20);
-	$pdf->SetX(17);
+	$pdf->SetX(19);
 	$pdf->Cell(15,10,"$fecha");
 
-	$pdf->SetFillColor(175,175,175);
-	$pdf->SetFont("Arial","B",9);
-
-	$pdf->SetY(30);
-	$pdf->SetX(5);
-	$pdf->Cell(10,8,"Cod",1,0,'C',True);
-
-	$pdf->SetY(30);
-	$pdf->SetX(15);
-	$pdf->Cell(25,8,"#Habitaciones",1,0,'C',True);
-
-	$pdf->SetY(30);
-	$pdf->SetX(40);
-	$pdf->Cell(20,8,"#Personas",1,0,'C',True);
-
-	$pdf->SetY(30);
-	$pdf->SetX(60);
-	$pdf->Cell(15,8,"Precio",1,0,'C',True);
-
-	$pdf->SetY(30);
-	$pdf->SetX(75);
-	$pdf->Cell(80,8,"Descripcion",1,0,'C',True);
-
-	$pdf->SetY(30);
-	$pdf->SetX(155);
-	$pdf->Cell(25,8,"Tipo",1,0,'C',True);
-
-	$pdf->SetY(30);
-	$pdf->SetX(180);
-	$pdf->Cell(25,8,"Estado",1,0,'C',True);
-
+//-------------------------------------------------------------------------------------
 	$y = 38;
-	$pdf->SetFont("Arial","",8);
+	$x = 5;
+	$i = 1;
 
 	while ($row = mysqli_fetch_array($habitaciones))
 	{
@@ -78,38 +49,79 @@
 	    $habEst = $row['Hab_Estado'];
 	    $habTip = $row['Tip_Descripcion'];
 
+	    if($habEst == 'Habilitada'){
+	    	$pdf->SetFillColor(107,202,96);
+	    }
+	    elseif($habEst == 'Inhabilitado'){
+	    	$pdf->SetFillColor(175,175,175);
+	    }
+	    elseif($habEst == 'Ocupada'){
+	    	$pdf->SetFillColor(211,83,97);
+	    }
+	    else{
+	    	$pdf->SetFillColor(212,187,47);
+	    }
 
 	    $pdf->SetY($y);
-		$pdf->SetX(5);
-		$pdf->Cell(10,7,$habCod,1);
+		$pdf->SetX($x);
+		$pdf->Cell(40,40,"",1,0,'C',True);
 
-		$pdf->SetY($y);
-		$pdf->SetX(15);
-		$pdf->Cell(25,7,$habNum,1);
+		$pdf->SetFont("Arial","B",9);
+		$pdf->SetY($y + 3);
+		$pdf->SetX($x + 15);
+	    $pdf->Cell(20,7,$habNum);
 
-		$pdf->SetY($y);
-		$pdf->SetX(40);
-		$pdf->Cell(20,7,$habCant,1);
+	    $pdf->SetFont("Arial","",8);
+	    $pdf->SetY($y + 10);
+		$pdf->SetX($x + 15);
+		$pdf->Cell(20,7, '# ' . $habCant);
 
-		$pdf->SetY($y);
-		$pdf->SetX(60);
-		$pdf->Cell(15,7,$habPre,1);
+		$pdf->SetY($y + 17);
+		$pdf->SetX($x + 15);
+		$pdf->Cell(20,7,$habTip);
 
-		$pdf->SetY($y);
-		$pdf->SetX(75);
-		$pdf->Cell(80,7,$habDes,1);
+		$pdf->SetY($y + 25);
+		$pdf->SetX($x + 15);
+		$pdf->Cell(20,7,'$ ' . $habPre);
 
-		$pdf->SetY($y);
-		$pdf->SetX(155);
-		$pdf->Cell(25,7,$habTip,1);
 
-		$pdf->SetY($y);
-		$pdf->SetX(180);
-		$pdf->Cell(25,7,$habEst,1);
-
-		$y = $y + 7;
+	    if($i%5 == 0){
+	    	$y = $y + 40;
+	    }
+		if($i%5 != 0){
+	    	$x = $x + 40;
+	    }
+	    else{
+	    	$x = 5;
+	    }
 		
+		$i++;
 	}
+
+	$pdf->SetY($y + 55);
+	$pdf->SetX(5);
+	$pdf->Cell(20,4,'Leyenda de estados');
+
+	$pdf->SetFillColor(107,202,96);
+	$pdf->SetY($y + 60);
+	$pdf->SetX(5);
+	$pdf->Cell(20,4,'Habilitada',1,0,'C',True);
+
+	$pdf->SetFillColor(211,83,97);
+	$pdf->SetY($y + 60);
+	$pdf->SetX(25);
+	$pdf->Cell(20,4,'Ocupada',1,0,'C',True);
+
+	$pdf->SetFillColor(175,175,175);
+	$pdf->SetY($y + 60);
+	$pdf->SetX(45);
+	$pdf->Cell(20,4,'Inhabilitado',1,0,'C',True);
+
+	$pdf->SetFillColor(212,187,47);
+	$pdf->SetY($y + 60);
+	$pdf->SetX(65);
+	$pdf->Cell(20,4,'Mantenimiento',1,0,'C',True);
+
 	$pdf->output(); 
 
 ?>

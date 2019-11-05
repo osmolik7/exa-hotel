@@ -58,7 +58,7 @@ require_once('../DATA/conexion.php');
                                 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label label-xs">Filtrar por:</label>
-                                    <div class="col-sm-5 radioset">
+                                    <div class="col-sm-5 radioset" style="margin-right: 0px; padding-right: 0px;">
                                         <input id="rad_ba1" name="op_opciones" type="radio" value="h" checked="" onclick="setfocus(this.form.search)"/>
                                         <label for="rad_ba1">&nbsp;&nbsp;#Habitacion&nbsp;&nbsp;</label>
 
@@ -67,17 +67,26 @@ require_once('../DATA/conexion.php');
                                         <input id="rad_ba3" name="op_opciones" type="radio" value="c" onclick="setfocus(this.form.search)"/><label for="rad_ba3">&nbsp;&nbsp;#Personas&nbsp;&nbsp;</label>
 
                                         <input id="rad_ba4" name="op_opciones" type="radio" value="t" onclick="setfocus(this.form.search)"/><label for="rad_ba4">&nbsp;&nbsp;Tipo&nbsp;&nbsp;</label>
+
+                                        <div class="col-xs-3 col-sm-3" style="margin-left: 0px;  padding-left: 0px;" >
+                                            <select id="Hab_Estado" name="Hab_Estado" class="form-control input-xs" onchange="buscarHabitacion('')">
+                                                <option value = "T" >Todos</option>
+                                                <option value = "H" >Habilitado</option>
+                                                <option value = "I" >Inhabilitada</option>
+                                                <option value = "M" >Mantenimiento</option>
+                                                <option value = "O" >Ocupada</option>
+                                            </select>
+                                        </div>
+
                                     </div>
+                                    
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label label-xs">B&uacute;squeda:</label>
-                                    <div class="col-sm-5">
-                                        <div class="input-group">
+                                    <div class="col-sm-10">
+                                        <div class="col-xs-10 col-sm-6 input-group">
                                             <input type="text" id="search" name="search" class="form-control input-xs" placeholder="Ingrese &iacute;ndice de b&uacute;squeda" autofocus="" onkeyup="buscarHabitacion(this.value)">
-                                            <span class="input-group-btn">
-                                                <button id="btnSearch" class="btn btn-xs"></button>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +94,7 @@ require_once('../DATA/conexion.php');
                         </form>
                     </div>
                   </div>
-                </div>
+                </div>               
 
                   <div class="col-sm-12" >
                     <div class="table-responsive">
@@ -108,19 +117,21 @@ require_once('../DATA/conexion.php');
                 var xhttp = new XMLHttpRequest();  
                 var ele = document.getElementsByName('op_opciones');
                 var opcion = ''; 
+                var estado = document.getElementById("Hab_Estado").value;
+
                 for(i = 0; i < ele.length; i++) { 
                     if(ele[i].checked) {
                       opcion = ele[i].value; 
-                    } 
-                   
+                    }   
                 } 
+
                 xhttp.onreadystatechange = function() {
                   if (this.readyState == 4 && this.status ==200) 
                   {
                     document.getElementById('tableResult').innerHTML = this.responseText;
                   }
                 };
-                xhttp.open("GET", "../LOGICA/log_con_habitacion.php?q="+datoBusqueda+"&o="+opcion, true);
+                xhttp.open("GET", "../LOGICA/log_con_habitacion.php?q="+datoBusqueda+"&o="+opcion+"&e="+estado, true);
                 xhttp.send();
             }
 

@@ -24,26 +24,28 @@ require_once('../DATA/conexion.php');
     {
         $sql= "INSERT INTO habitacion (Hab_Numero, Hab_Cantidad, Hab_Descripcion, Hab_Estado, Hab_Detalle, Tip_Cod, Emp_Cod, Hab_Precio) VALUES('$hab_numero', $hab_cantidad ,'$hab_descripcion','$hab_estado','$hab_detalle', $tip_cod, $empresa, $hab_precio)";
 
-        ChromePhp::log("SQL INSERT: " . $sql);
         if (!$conn)
         {
-            ChromePhp::log("Error en la conexion " . mysqli_connect_error());
+            echo "<script type='text/javascript'>
+					alert('Error en la conexion');
+				</script>";
         }
         else
         {
-            ChromePhp::log("Conexion exitosa");
             if (mysqli_query($conn, $sql)){
-                ChromePhp::log("Se inserto correctamente");
-                include ('../LOGICA/log_con_habtipo.php');
+
+            	echo "<script type='text/javascript'>
+						alert('Se ingreso correctamente la habitacion!');
+					  </script>";
             } 
             else {
-                ChromePhp::log("No se inserto correctamente");
+
+                echo "<script type='text/javascript'>
+						alert('No se ingreso la habitacion!');
+					  </script>";
             }
             mysqli_close($conn);
         } 
     }
-
     include('../LOGICA/log_con_habtipo.php');
-
-
 ?>

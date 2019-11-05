@@ -3,7 +3,10 @@ require_once('../DATA/conexion.php');
 
 $datoBusqueda = $_GET['q'];
 $filtroAdicional = $_GET['o'];
+$estado = $_GET['e'];
+
 $sqlAdicional = '';
+$sqlAdicionalEstado = '';
 $empresa = $_SESSION['Ses_Emp_Cod'];
 
 if($filtroAdicional == 'h'){
@@ -19,6 +22,24 @@ else{
 	$sqlAdicional= " and habitacion_tipo.Tip_Descripcion like '%$datoBusqueda%'";
 }
 
+
+if($estado == 'H'){
+	$sqlAdicionalEstado = " and Hab_Estado = 'H'";
+}
+elseif($estado == 'I'){
+	$sqlAdicionalEstado= " and Hab_Estado = 'I'";
+}
+elseif($estado == 'O'){
+	$sqlAdicionalEstado= " and Hab_Estado = 'O'";
+}
+elseif($estado == 'M'){
+	$sqlAdicionalEstado= " and Hab_Estado = 'M'";
+}
+else{
+	$sqlAdicionalEstado= "";
+}
+
+
 if($datoBusqueda <> ''){
 	$sqlSelectHabitaciones = "select habitacion.*,
 	CASE habitacion.Hab_Estado
@@ -27,7 +48,7 @@ if($datoBusqueda <> ''){
 	   WHEN 'O' THEN 'Ocupada'
 	   ELSE 'Habilitada'
 	END AS 'Hab_Estado',
-	 habitacion_tipo.Tip_Descripcion from habitacion, habitacion_tipo where habitacion.Emp_Cod = $empresa and habitacion_tipo.Tip_Cod = habitacion.Tip_Cod" . $sqlAdicional; 
+	 habitacion_tipo.Tip_Descripcion from habitacion, habitacion_tipo where habitacion.Emp_Cod = $empresa and habitacion_tipo.Tip_Cod = habitacion.Tip_Cod" . $sqlAdicional . $sqlAdicionalEstado; 
 }
 else{
 	$sqlSelectHabitaciones = "select habitacion.*, 
@@ -37,7 +58,7 @@ else{
 	   WHEN 'O' THEN 'Ocupada'
 	   ELSE 'Habilitada'
 	END AS 'Hab_Estado',
-	habitacion_tipo.Tip_Descripcion from habitacion, habitacion_tipo where habitacion.Emp_Cod = $empresa and habitacion_tipo.Tip_Cod = habitacion.Tip_Cod";
+	habitacion_tipo.Tip_Descripcion from habitacion, habitacion_tipo where habitacion.Emp_Cod = $empresa and habitacion_tipo.Tip_Cod = habitacion.Tip_Cod" . $sqlAdicionalEstado;
 }
 
 echo "<thead class='thead-dark ui-th-column ui-th-ltr ui-state-default' >
@@ -110,7 +131,7 @@ while ($row = mysqli_fetch_array($habitaciones))
 			<td class='col-md-6'> $habDes </td>
 			<td class='col-md-1 style='width: 80px;''> $habTip </td>
 			<td class='col-md-1' style='font-size:13px'> <span title='$habEstDet' class='label " . $colorEstado ."'> $habEst </span></td>
-			<td class='col-md-1' style='width: 60px;'>
+			<td style='width: 60px;'>
 
 			<div role='group'>
 				<form  method='POST' action='hot_mod_habitacion.php'>

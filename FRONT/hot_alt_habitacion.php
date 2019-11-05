@@ -76,7 +76,7 @@ require_once('../DATA/conexion.php');
 
             .modal-body {padding: 2px 16px;}
           </style>
-          
+
     </HEAD>
 
     <BODY>
