@@ -4,6 +4,35 @@
 	require_once('../DATA/conexion.php');
 	$empresa = $_SESSION['Ses_Emp_Cod'];
 
+	class PDF extends FPDF
+	{
+		// // Page header
+		// function Header()
+		// {
+		//     // Logo
+		//     $this->Image('logo.png',10,6,30);
+		//     // Arial bold 15
+		//     $this->SetFont('Arial','B',15);
+		//     // Move to the right
+		//     $this->Cell(80);
+		//     // Title
+		//     $this->Cell(30,10,'Title',1,0,'C');
+		//     // Line break
+		//     $this->Ln(20);
+		// }
+
+		// Page footer
+		function Footer()
+		{
+		    // Position at 1.5 cm from bottom
+		    $this->SetY(-15);
+		    // Arial italic 8
+		    $this->SetFont('Arial','I',8);
+		    // Page number
+		    $this->Cell(0,10,'Pagina: '.$this->PageNo(),0,0,'C');
+		}
+	}
+
 	$sqlSelectHabitaciones = "select habitacion.*, 
 		CASE habitacion.Hab_Estado
 		   WHEN 'I' THEN 'Inhabilitado'
@@ -15,7 +44,7 @@
 
 	$habitaciones = mysqli_query($conexionHotel, $sqlSelectHabitaciones);
 	
-	$pdf = new FPDF();
+	$pdf = new PDF();
 	$pdf->AddPage();
 	$pdf->SetFont("Arial","B",14);
 	
@@ -66,6 +95,8 @@
 		$pdf->SetX($x);
 		$pdf->Cell(40,40,"",1,0,'C',True);
 
+		$pdf->Image('room.png',$x + 23,$y + 1,6);
+
 		$pdf->SetFont("Arial","B",9);
 		$pdf->SetY($y + 1);
 		$pdf->SetX($x + 12);
@@ -98,27 +129,31 @@
 		$i++;
 	}
 
-	$pdf->SetY($y + 55);
+	$pdf->SetY(-45);
 	$pdf->SetX(5);
 	$pdf->Cell(20,4,'Leyenda de estados');
 
 	$pdf->SetFillColor(107,202,96);
-	$pdf->SetY($y + 60);
+	$pdf->SetY(-40
+	);
 	$pdf->SetX(5);
 	$pdf->Cell(20,4,'Habilitada',1,0,'C',True);
 
 	$pdf->SetFillColor(211,83,97);
-	$pdf->SetY($y + 60);
+	$pdf->SetY(-40
+	);
 	$pdf->SetX(25);
 	$pdf->Cell(20,4,'Ocupada',1,0,'C',True);
 
 	$pdf->SetFillColor(175,175,175);
-	$pdf->SetY($y + 60);
+	$pdf->SetY(-40
+	);
 	$pdf->SetX(45);
 	$pdf->Cell(20,4,'Inhabilitado',1,0,'C',True);
 
 	$pdf->SetFillColor(212,187,47);
-	$pdf->SetY($y + 60);
+	$pdf->SetY(-40
+	);
 	$pdf->SetX(65);
 	$pdf->Cell(20,4,'Mantenimiento',1,0,'C',True);
 
