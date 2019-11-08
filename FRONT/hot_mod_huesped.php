@@ -32,12 +32,12 @@ $obBD_con1 =  new Class_Log_Datos_Cli;
 if (isset($clientesAjax)) {
     $data = filter_input_array(INPUT_GET);
     $data["Emp_Cod"] = $Ses_Emp_Cod;
-    $contar = $obBD_con1->getRowConsulta(27, $data, $obBD_conexion);
+    $contar = $obBD_con1->getRowConsulta(37, $data, $obBD_conexion);
     $pagination = pages($contar['total'], $page, $rows);
     $responce = $pagination['data'];
     $data["limits"] = $pagination['limits'];
     if ($contar['total'] > 0) {
-        $responce['rows'] = $obBD_con1->getArrayConsulta(27, $data, $obBD_conexion);
+        $responce['rows'] = $obBD_con1->getArrayConsulta(37, $data, $obBD_conexion);
     }
     utf8_encode_deep($responce);
     echo json_encode($responce);
@@ -90,7 +90,7 @@ if(isset($guardarCliente)){
                                     <label class="col-sm-2 control-label label-xs">Filtrar por:</label>
                                     <div class="col-sm-5 radioset">
                                         <input id="rad_ba1" name="op_opciones" type="radio" value="c" checked="" onclick="setfocus(this.form.search)"/><label for="rad_ba1">&nbsp;&nbsp;C&eacute;dula/R.U.C.&nbsp;&nbsp;</label>
-                                        <input id="rad_ba2" name="op_opciones" type="radio" value="d" onclick="setfocus(this.form.search)"/><label for="rad_ba2">&nbsp;&nbsp;Cliente&nbsp;&nbsp;</label>
+                                        <input id="rad_ba2" name="op_opciones" type="radio" value="d" onclick="setfocus(this.form.search)"/><label for="rad_ba2">&nbsp;&nbsp;Huesped&nbsp;&nbsp;</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -189,6 +189,24 @@ if(isset($guardarCliente)){
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group ">
+                                    <label class="col-xs-3 control-label label-xs required">Tipo Huesped:</label>
+                                    <div class="col-xs-4" >
+                                        <select name="Hue_Tipo" class="form-control input-xs">
+                                            <option value = "A" >A</option>
+                                            <option value = "B" >B</option>
+                                            <option value = "C" >C</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label label-xs required">Tiempo Espera</label>
+                                    <div class="col-xs-4" ><input name="Hue_Espera" type="text" class="form-control input-xs" required="" />
+                                    </div>
+                                </div>
+                                
                             </fieldset>
                             <fieldset class="exa-fieldset" >
                                 <legend class="Titulos2">Datos de Ubicación</legend>
@@ -236,7 +254,7 @@ if(isset($guardarCliente)){
         <script type="text/javascript">
             $(function(){
                 
-                //Inicio Grid para presentar el detalle de factura
+                //Inicio Grid para presentar el detalle del huesped 
                 $("#Lis_Cli").createGrid({
                     postData: $("#frm_bus").getData("clientesAjax"), height: 295,
                     colModel: [
@@ -246,7 +264,7 @@ if(isset($guardarCliente)){
                         {label: 'Correo', name: 'Prs_Cor', width: 150, align: "left"},
                         {label: '&nbsp;', name: 'act1', width: 30, align: 'center', viewable: false,
                             formatter:function(cellvalue, options, rowObject){
-                                return $.getGridButton(cargarCliente, rowObject, 'Editar Cliente');
+                                return $.getGridButton(cargarCliente, rowObject, 'Editar Huesped');
                             }
                         }
                     ]
