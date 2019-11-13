@@ -9,9 +9,9 @@
  * @author lewis.chimarro
  * @version 1.0
  * Fecha de actualización:	2014-05-21
- * 
  * @package tesoreria.FRONT
  */	  
+
 require_once('../../administrador/LOGICA/seguridad.php');
 require_once('../../tesoreria/LOGICA/tes_log_cliente.php');	  
 require_once('../../Librerias/procedimientos/almacenados_standar.php');
@@ -26,6 +26,7 @@ $obBD_conexion = new Class_Log_Conexion_Cli($Ses_Dat_Dis);
 * objeto para consultas
 * @var Class_Log_Datos_Tes
 */
+
 $obBD_con1 =  new Class_Log_Datos_Cli;
 
 /*Sección para listar los clientes registrados dentro de la empresa*/
@@ -58,7 +59,7 @@ if(isset($guardarCliente)){
     $pers=$obBD_con1->getRowConsulta('persona.selectWhere',array('clean'=>true, 'Prs_Cod'=>$Prs_Cod),$obBD_conexion);
     $obBD_con1->inicio_transaccion($obBD_conexion->conexion);                  
     $obBD_con1->operacionobBD(12,utf8_decode($Prs_Ced.'*'.$Prs_Nom.'*'.$Prs_Ape.'*'.$Prs_Sex.'*'.$Prs_Dir.'*'.$Prs_Tel.'*'.$Prs_Te2.'*'.$Prs_Cel.'*'.$Ciu_Cod.'*'.$Ide_Cod.'*'.(empty($pers['Prs_Cor'])&&!empty($Prs_Cor)?$Prs_Cor:'').'*'.$Prs_Cod),$obBD_conexion); 
-    $obBD_con1->operacionobBD(26,$Prs_Cod.'*'.$Cli_Tic.'*'.$Cli_Con.'*'.$Cli_Cod.'*'.$Prs_Cor,$obBD_conexion); 
+    $obBD_con1->operacionobBD(36,$Prs_Cod.'*'.$Cli_Tic.'*'.$Cli_Con.'*'.$Cli_Cod.'*'.$Prs_Cor .'*'.$Hue_Tipo.'*'.$Hue_Espera,$obBD_conexion); 
     $obBD_con1->fin_transaccion_nomsn($obBD_conexion->conexion);
     if ($obBD_con1->Error == 0) { $responce['success'] = true; }
     else{ $responce['success'] = false; $responce['message'] = "No se ha logrado realizar la Transaccion"; }
@@ -203,7 +204,7 @@ if(isset($guardarCliente)){
 
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label label-xs required">Tiempo Espera</label>
-                                    <div class="col-xs-4" ><input name="Hue_Espera" type="text" class="form-control input-xs" required="" />
+                                    <div class="col-xs-4" ><input name="Hue_Espera" type="time" class="form-control input-xs" required="" />
                                     </div>
                                 </div>
                                 
@@ -252,8 +253,7 @@ if(isset($guardarCliente)){
             </div>
         </div>
         <script type="text/javascript">
-            $(function(){
-                
+            $(function(){    
                 //Inicio Grid para presentar el detalle del huesped 
                 $("#Lis_Cli").createGrid({
                     postData: $("#frm_bus").getData("clientesAjax"), height: 295,
@@ -268,8 +268,7 @@ if(isset($guardarCliente)){
                             }
                         }
                     ]
-                }, false, "#Pag_Cli");
-                
+                }, false, "#Pag_Cli");                
                 
                 $('#Ciu_Cod').createChosen('input-xs',{tabIndex:6, width:'100%',template:function (t,d){ return '<div class="over"><b>'+t+'</b></div><div class="over desc" style="font-size:11px;"><b>Provincia:</b> '+d['prov']+' <b>Pa&iacute;s:</b> '+d['pais']+'</div>';}});
                 

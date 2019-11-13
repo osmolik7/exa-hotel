@@ -257,7 +257,7 @@ if(isset($guardarCliente)){
 
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label label-xs required">Tiempo Espera</label>
-                                    <div class="col-xs-4" ><input name="Hue_Espera" type="text" class="form-control input-xs" required="" />
+                                    <div class="col-xs-4" ><input name="Hue_Espera" type="time" class="form-control input-xs" required="" />
                                     </div>
                                 </div>
 
