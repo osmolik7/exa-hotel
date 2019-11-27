@@ -96,7 +96,7 @@ require_once('../DATA/conexion.php');
                   </div>
                 </div>               
 
-                  <div class="col-sm-12" >
+                  <div class="col-xs-12" >
                     <div class="table-responsive">
                       <table id="tableResult" class="table table-hover table-fixed table-bordered small"><?php include("../LOGICA/log_con_habitacion.php") ?></table>
                     </div>
@@ -143,7 +143,7 @@ require_once('../DATA/conexion.php');
                     buscarHabitacion(document.getElementById('search').value);
                   }
                 };
-                xhttp.open("GET", "log_anu_habitacion.php?c="+codigo, true);
+                xhttp.open("GET", "../LOGICA/log_anu_habitacion.php?c="+codigo, true);
                 xhttp.send();
             }
         </script>
